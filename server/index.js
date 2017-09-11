@@ -3,12 +3,12 @@
 // libs
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const cors = require('cors');
 const responseGen = require('./even-responses')();
 
 const app = express();
 
-
+app.use(cors());
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));

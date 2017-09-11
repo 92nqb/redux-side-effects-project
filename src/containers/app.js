@@ -1,20 +1,61 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom'
-import Home from './home'
-import About from './about'
+import { connect } from 'react-redux'
 
-const App = () => (
-  <div>
-    <header>
-      <Link to="/">Home</Link>
-      <Link to="/about-us">About</Link>
-    </header>
+import withAPIStatus from '../components/with-api-status';
+import Loading from '../components/loading';
+import Success from '../components/success';
+import Error from '../components/error';
 
-    <main>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/about-us" component={About} />
-    </main>
-  </div>
-);
+import { callEvenApi } from '../api';
+import {
+  requestStart,
+  requestReceived,
+  requestFailed,
+} from '../actions';
 
-export default App;
+
+const APIStatus = withAPIStatus({
+  SuccessComponent: Success,
+  LoadingComponent: Loading,
+  ErrorComponent: Error,
+});
+
+export const App = (props) => {
+  const {
+    requestStartAction,
+    requestReceivedAction,
+    requestFailedAction,
+    ...restOfProps,
+  } = props;
+  return (
+    <div>
+      <main>
+        <h1>Click the button</h1>
+        <button onClick={(evt) => {
+          evt.preventDefault();
+          Promise.resolve()
+            .then(props.requestStartAction)
+            .then(callEvenApi)
+            .then(props.requestReceivedAction, props.requestFailedAction);
+        }} >call api</button>
+        <APIStatus {...restOfProps} />
+      </main>
+    </div>
+  )
+};
+
+function mapStateToProps(state) {
+  return {
+    status: state.app.status,
+    detail: state.app.detail,
+    id: state.app.id,
+    title: state.app.title,
+  };
+}
+const mapDispatchToProps = {
+  requestStartAction: requestStart,
+  requestReceivedAction: requestReceived,
+  requestFailedAction: requestFailed,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

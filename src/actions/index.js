@@ -9,10 +9,17 @@ export const requestStart = () => ({
 
 export const requestReceived = (response) => ({
   type: REQUEST_SUCCEEDED,
-  payload: response,
+  payload: {
+    id: response.data.id,
+    title: response.data.attributes.title,
+    detail: response.data.attributes.detail,
+  },
 });
 
 export const requestFailed = (error) => ({
   type: REQUEST_FAILED,
-  error,
+  error: {
+    title: error.response.errors[0].title,
+    detail: error.response.errors[0].detail,
+  },
 });
