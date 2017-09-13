@@ -23,10 +23,3 @@ export const requestFailed = (error) => ({
     detail: error.response.errors[0].detail,
   },
 });
-
-export const performRequest = () => (dispatch, getState, api) => {
-  dispatch(requestStart());
-  return api.callEvenApi()
-  .then((response) => dispatch(requestReceived(response)))
-  .catch((error) => dispatch(requestFailed(error)));
-};

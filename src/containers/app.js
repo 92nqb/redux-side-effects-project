@@ -5,7 +5,7 @@ import withAPIStatus from '../components/with-api-status';
 import Loading from '../components/loading';
 import Success from '../components/success';
 import Error from '../components/error';
-import { performRequest } from '../actions';
+import { requestStart } from '../actions';
 
 const APIStatus = withAPIStatus({
   SuccessComponent: Success,
@@ -41,7 +41,7 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = {
-  performRequestAction: performRequest,
+  performRequestAction: requestStart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
