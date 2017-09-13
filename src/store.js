@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import rootReducer from './reducers';
 
+import * as apiObj from './api';
+
 const loggerMiddleware = createLogger();
 const initialState = {};
 const enhancers = [];
 const middleware = [
   loggerMiddleware,
-  thunk,
+  thunk.withExtraArgument(apiObj),
 ];
 
 if (process.env.NODE_ENV === 'development') {

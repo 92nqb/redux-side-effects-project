@@ -1,6 +1,4 @@
 
-import { callEvenApi } from '../api';
-
 export const REQUEST_STARTED = 'REQUEST_STARTED';
 export const REQUEST_SUCCEEDED = 'REQUEST_SUCCEEDED';
 export const REQUEST_FAILED = 'REQUEST_FAILED';
@@ -26,9 +24,9 @@ export const requestFailed = (error) => ({
   },
 });
 
-export const performRequest = () => (dispatch) => {
+export const performRequest = () => (dispatch, getState, api) => {
   dispatch(requestStart());
-  return callEvenApi()
+  return api.callEvenApi()
   .then((response) => dispatch(requestReceived(response)))
   .catch((error) => dispatch(requestFailed(error)));
 };
