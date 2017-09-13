@@ -1,5 +1,5 @@
 
-const API_ENDPOINT = 'http://localhost:8080/api';
+export const API_ENDPOINT = 'http://localhost:8080/api';
 
 export const STATE_SUCCESSFUL = 'successful';
 export const STATE_PENDING = 'pending';
