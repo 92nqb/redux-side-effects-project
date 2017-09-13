@@ -5,8 +5,6 @@ import withAPIStatus from '../components/with-api-status';
 import Loading from '../components/loading';
 import Success from '../components/success';
 import Error from '../components/error';
-
-import { callEvenApi } from '../api';
 import { performRequest } from '../actions';
 
 const APIStatus = withAPIStatus({
@@ -17,7 +15,7 @@ const APIStatus = withAPIStatus({
 
 export const App = (props) => {
   const {
-    performRequestAction
+    performRequestAction,
     ...restOfProps,
   } = props;
   return (
