@@ -7,12 +7,7 @@ import Success from '../components/success';
 import Error from '../components/error';
 
 import { callEvenApi } from '../api';
-import {
-  requestStart,
-  requestReceived,
-  requestFailed,
-} from '../actions';
-
+import { performRequest } from '../actions';
 
 const APIStatus = withAPIStatus({
   SuccessComponent: Success,
@@ -22,9 +17,7 @@ const APIStatus = withAPIStatus({
 
 export const App = (props) => {
   const {
-    requestStartAction,
-    requestReceivedAction,
-    requestFailedAction,
+    performRequestAction
     ...restOfProps,
   } = props;
   return (
@@ -33,10 +26,7 @@ export const App = (props) => {
         <h1>Click the button</h1>
         <button onClick={(evt) => {
           evt.preventDefault();
-          Promise.resolve()
-            .then(props.requestStartAction)
-            .then(callEvenApi)
-            .then(props.requestReceivedAction, props.requestFailedAction);
+          performRequestAction();
         }} >call api</button>
         <APIStatus {...restOfProps} />
       </main>
@@ -53,9 +43,7 @@ function mapStateToProps(state) {
   };
 }
 const mapDispatchToProps = {
-  requestStartAction: requestStart,
-  requestReceivedAction: requestReceived,
-  requestFailedAction: requestFailed,
+  performRequestAction: performRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
